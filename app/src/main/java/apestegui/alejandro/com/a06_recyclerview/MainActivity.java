@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements RVAdapterPersona.
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(MainActivity.this, PersonaEditar.class);
-            intent.putExtra("esNuevo", true);
             startActivityForResult(intent, NUEVO);
         }
     };
