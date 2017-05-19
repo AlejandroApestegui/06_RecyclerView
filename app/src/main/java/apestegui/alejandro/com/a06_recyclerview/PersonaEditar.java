@@ -3,9 +3,11 @@ package apestegui.alejandro.com.a06_recyclerview;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class PersonaEditar extends AppCompatActivity {
 
@@ -28,6 +30,10 @@ public class PersonaEditar extends AppCompatActivity {
     private View.OnClickListener btnGrabarOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            if (!validar()) {
+                Toast.makeText(PersonaEditar.this, "Ingrese todos los campos", Toast.LENGTH_SHORT).show();
+                return;
+            }
             Intent intent = new Intent();
             intent.putExtra("id", id);
             intent.putExtra("accion", EDITAR);
@@ -39,6 +45,26 @@ public class PersonaEditar extends AppCompatActivity {
             finish();
         }
     };
+
+
+    private boolean validar() {
+        boolean valida = true;
+
+        if(TextUtils.isEmpty(etNombre.getText().toString().trim())){
+            valida = false;
+        }
+        if(TextUtils.isEmpty(etApellido.getText().toString().trim())){
+            valida = false;
+        }
+        if(TextUtils.isEmpty(etEdad.getText())){
+            valida = false;
+        }
+        if(TextUtils.isEmpty(etDocumento.getText().toString().trim())){
+            valida = false;
+        }
+
+        return valida;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +84,14 @@ public class PersonaEditar extends AppCompatActivity {
         etNombre.setText(intent.getStringExtra("nombre"));
         etApellido.setText(intent.getStringExtra("apellido"));
         etDocumento.setText(intent.getStringExtra("documento"));
-        etEdad.setText(""+(intent.getIntExtra("edad",-1)==-1?"":intent.getIntExtra("edad",-1)));
+        int edad = intent.getIntExtra("edad", -1);
+        String edadString;
+        if(edad==-1)edadString = "";
+        else edadString = ""+edad;
+        etEdad.setText(edadString);
 
         id = intent.getStringExtra("id");
-        if(id==null){
+        if (id == null) {
             btnEliminar.setVisibility(View.INVISIBLE);
         }
 
