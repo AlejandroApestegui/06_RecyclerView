@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">06_RecyclerView</string>
+    <string name="title_activity_persona_editar">PersonaEditar</string>
+</resources>
